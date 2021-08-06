@@ -1,0 +1,142 @@
+﻿@page "/checkout"
+@attribute [Authorize]
+
+@if (ProdutosCarrinho == null)
+{
+<Carregando />
+ }
+else
+{
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page text-center">Checkout</h2>
+    </div>
+</section>
+
+                <section class="section-content padding-y bg">
+                    <div class="container">
+                        <div class="row">
+
+                            <aside class="col-md-6">
+                                <div class="card mb-3">
+                                    <article class="card-body">
+                                        <header class="mb-4">
+                                            <h4 class="card-title">Checkout do Carrinho:</h4>
+                                        </header>
+                                        <div class="row">
+
+                                            @foreach (var produto in ProdutosCarrinho)
+                                            {
+                            <div class="col-md-6">
+                                <figure class="itemside  mb-3">
+                                    <div class="aside">
+                                        <img src="@produto.FonteImagem" class="border img-xs" />
+                                    </div>
+                                    <figcaption class="info">
+                                        <p> @produto.Nome </p>
+                                        <span> @produto.Quantidade x R$@produto.Preco = Total: R$@(produto.Preco * produto.Quantidade) </span>
+                                    </figcaption>
+                                </figure>
+                            </div>}
+
+                                        </div>
+                                    </article>
+                                    <article class="card-body border-top">
+
+                                        <dl class="row">
+                                            <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">@ProdutosCarrinho.Count() items</span></dt>
+                                            <dd class="col-sm-2 text-right"><strong>R$@PrecoTotal</strong></dd>
+
+                                            <dt class="col-sm-10">Desconto: <span class="float-right text-muted">0%</span></dt>
+                                            <dd class="col-sm-2 text-danger text-right"><strong>R$0</strong></dd>
+
+                                            <dt class="col-sm-10">Frete: <span class="float-right text-muted">Entrega Padrão</span></dt>
+                                            <dd class="col-sm-2 text-right"><strong>Grátis</strong></dd>
+
+                                            <dt class="col-sm-10">Taxa: <span class="float-right text-muted">0%</span></dt>
+                                            <dd class="col-sm-2 text-right text-success"><strong>R$0</strong></dd>
+
+                                            <dt class="col-sm-10">Total:</dt>
+                                            <dd class="col-sm-2 text-right"><strong class="h5 text-dark">R$@PrecoTotal</strong></dd>
+                                        </dl>
+
+                                    </article>
+                                </div>
+                            </aside>
+
+                            <aside class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+
+                                        <h4 class="card-title mb-4">Informação de entrega</h4>
+                                        <EditForm Model="Endereco" OnValidSubmit="GravarAsync">
+
+                                            <DataAnnotationsValidator />
+                                            <ValidationSummary />
+
+                                            <div class="form-group">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
+                                                    <span class="custom-control-label"> Entrega Padrão <br /> Grátis </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col form-group">
+                                                    <label>Email:</label>
+                                                    <InputText @bind-Value="Email" type="email" class="form-control" disabled />
+                                                </div>
+                                                <div class="col form-group">
+                                                    <label>Telefone:</label>
+                                                    <InputText @bind-Value="Endereco.NumeroTelefone" type="tel" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>País:</label>
+                                                    <InputSelect @bind-Value="Endereco.Pais" id="inputState" class="form-control">
+                                                        <option value="Brasil" selected="">Brasil</option>
+                                                        <option value="Argentina">Argentina</option>
+                                                        <option value="Chile">Chile</option>
+                                                        <option value="Uruguai">Uruguai</option>
+                                                        <option value="Bolivia">Bolivia</option>
+                                                        <option value="Peru">Peru</option>
+                                                    </InputSelect>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Estado:</label>
+                                                    <InputText @bind-Value="Endereco.Estado" type="text" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col form-group">
+                                                    <label>Cidade:</label>
+                                                    <InputText @bind-Value="Endereco.CodigoPostal" type="text" class="form-control" />
+                                                </div>
+                                                <div class="col form-group">
+                                                    <label>Código Postal</label>
+                                                    <InputText @bind-Value="Endereco.CodigoPostal" type="text" class="form-control" />
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Endereço:</label>
+                                                <InputTextArea @bind-Value="Endereco.Descricao" class="form-control" rows="2"></InputTextArea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block"> Faça o pedido </button>
+                                            </div>
+
+                                        </EditForm>
+                                    </div>
+                                </div>
+                            </aside>
+
+                        </div>
+                    </div>
+                </section>
+}

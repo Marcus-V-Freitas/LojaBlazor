@@ -1,0 +1,46 @@
+﻿@page "/conta/registrar"
+
+<section class="section-content padding-y bg">
+
+    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+        <article class="card-body">
+            <header class="mb-4"><h4 class="card-title">Register</h4></header>
+            <EditForm Model="Model" OnValidSubmit="GravarAsync">
+
+                <ListaErros MostrarErros="MostrarErros" Erros="Erros" />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Primeiro nome:</label>
+                        <InputText @bind-Value="Model.PrimeiroNome" type="text" class="form-control" />
+                    </div>
+                    <div class="col form-group">
+                        <label>Sobrenome:</label>
+                        <InputText @bind-Value="Model.Sobrenome" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>E-mail:</label>
+                    <InputText @bind-Value="Model.Email" type="email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Senha:</label>
+                    <InputText @bind-Value="Model.Senha" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha:</label>
+                    <InputText @bind-Value="Model.ConfirmarSenha" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Registrar </button>
+                </div>
+            </EditForm>
+        </article>
+    </div>
+
+    <p class="text-center mt-4">Já tem uma conta? <a href="/conta/login">Login</a></p>
+    <br /><br />
+
+</section>

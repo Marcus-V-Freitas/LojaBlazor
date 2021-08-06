@@ -1,0 +1,25 @@
+﻿@page "/pedido/confirmado/{Id}"
+@attribute [Authorize]
+
+
+<section class="section-pagetop bg">
+    <div class="container text-center">
+        <h1 class="title-page text-success">
+            <i class="fas fa-check-circle"></i>
+        </h1>
+        <h1 class="title-page">
+            Obrigado!
+        </h1>
+        <h5 class="text-muted">
+            Seu pedido foi realizado com sucesso!
+        </h5>
+
+        <br />
+
+        <a class="btn btn-primary" href="/pedido/detalhes/@Id"> Detalhes do Pedido </a>
+        <a class="btn btn-outline-primary-light" href="/produtos/pagina/1"> Voltar para Compras </a>
+    </div>
+</section>
+
+@code { [Parameter]
+    public string Id { get; set; } }

@@ -1,0 +1,80 @@
+﻿@page "/produtos/editar/{Id:int}"
+@attribute [Authorize(Roles = Constants.AdministratorRole)]
+
+@if (Categorias == null || Model == null)
+{
+<Carregando />
+ }
+else
+{
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page text-center">Atualizar Produto</h2>
+    </div>
+</section>
+
+                <section class="section-content padding-y bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="card mx-auto">
+                                <article class="card-body">
+
+                                    <EditForm Model="Model" OnValidSubmit="GravarAsync">
+
+                                        <DataAnnotationsValidator />
+                                        <ValidationSummary />
+
+
+                                        <div class="form-group">
+                                            <label>Nome:</label>
+                                            <InputText @bind-Value="Model.Nome" type="text" class="form-control" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Categoria:</label>
+                                            <InputSelectNumber @bind-Value="Model.CategoriaId" class="form-control">
+                                                @foreach (var categoria in Categorias)
+                                                    {
+                                                        if (Model.CategoriaId == categoria.Id)
+                                                        {
+                            <option value="@categoria.Id" selected="">@categoria.Nome</option> }
+                            else
+                            {
+<option value="@categoria.Id">@categoria.Nome</option>}
+}
+                                            </InputSelectNumber>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Preço:</label>
+                                                <InputNumber @bind-Value="Model.Preco" type="number" class="form-control" />
+                                            </div>
+                                            <div class="col form-group">
+                                                <label>Quantidade:</label>
+                                                <InputNumber @bind-Value="Model.Quantidade" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Imagem:</label>
+                                            <InputText @bind-Value="Model.FonteImagem" type="url" class="form-control" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Descrição:</label>
+                                            <InputTextArea @bind-Value="Model.Descricao" rows="2" class="form-control"></InputTextArea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-block btn-primary">Atualizar</button>
+                                        </div>
+
+                                    </EditForm>
+
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+}

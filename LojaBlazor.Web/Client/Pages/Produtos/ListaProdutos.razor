@@ -1,0 +1,267 @@
+﻿@page "/produtos/pagina/{Pagina:int}"
+@page "/produtos/procurar/{QueryBusca}/pagina/{Pagina:int}"
+@page "/produtos/categoria/{NomeCategoria}/{IdCategoria:int}"
+@page "/produtos/categoria/{NomeCategoria}/{IdCategoria:int}/pagina/{Pagina:int}"
+@page "/produtos/categoria/{NomeCategoria}/{IdCategoria:int}/procurar/{QueryBusca}/pagina/{Pagina:int}"
+
+@if (Produtos == null || Categorias == null)
+{
+<Carregando />
+ }
+else
+{
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <div class="row">
+
+            <aside class="col-md-3">
+
+                <EditForm Model="model" @oninput="() => CarregarDados(comCategorias: false)">
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar</h5>
+
+                            <div class="input-group">
+                                <input @bind-value="QueryBusca" @bind-value:event="oninput" type="text" placeholder="Buscar" class="form-control" />
+                                <span class="input-group-append">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+
+                        <article class="filter-group">
+                            <header class="card-header">
+                                <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Categorias</h6>
+                                </a>
+                            </header>
+                            <div class="filter-content collapse show" id="collapse_1">
+                                <div class="card-body">
+
+                                    @foreach (var categoria in Categorias)
+                                    {
+                                        var nomeCategoria = categoria.Nome;
+                                        var atualCategoria = string.Empty;
+
+                                        if (NavigationManager.Uri.Contains("/categoria"))
+                                        {
+                                            atualCategoria = WebUtility.UrlDecode(NavigationManager.Uri.Split('/')[5]);
+                                        }
+
+                                        var isChecked = atualCategoria == nomeCategoria;
+
+                <a href="/produtos/categoria/@categoria.Nome/@categoria.Id" class="text-dark">
+                    <label class="custom-control custom-radio">
+
+                        @if (isChecked)
+                        {
+<input type="radio" name="myfilter_radio" class="custom-control-input" checked /> }
+else
+{
+<input type="radio" name="myfilter_radio" class="custom-control-input">}
+
+                        <span class="custom-control-label">
+                            @categoria.Nome
+                        </span>
+
+                    </label>
+                </a>}
+
+                                </div>
+                            </div>
+                        </article>
+                        <article class="filter-group">
+                            <header class="card-header">
+                                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title"> Faixa de preço </h6>
+                                </a>
+                            </header>
+                            <div class="filter-content collapse show" id="collapse_3" style="">
+                                <div class="card-body">
+                                    <input type="range" @bind-value="model.PrecoMin" @bind-value:event="oninput" class="custom-range" min="0" max="@model.PrecoMax" />
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Min.</label>
+                                            <input @bind-value="model.PrecoMin" @bind-value:event="oninput" class="form-control" placeholder="R$0" type="number" />
+                                        </div>
+                                        <div class="form-group text-right col-md-6">
+                                            <label>Max.</label>
+                                            <input @bind-value="model.PrecoMax" @bind-value:event="oninput" class="form-control" placeholder="R$1,0000" type="number" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <a @onclick="Redefinir"
+                       @onclick:preventDefault
+                       href="#"
+                       class="btn btn-light btn-sm mt-2">
+                        Redefinir
+                    </a>
+
+                </EditForm>
+            </aside>
+
+            <main class="col-md-9">
+
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto">@Produtos.Count() Itens encontrados </span>
+
+                        <div class="btn-group">
+
+                            @if (ListView)
+                            {
+            <a @onclick="MudarVisualizacao"
+               @onclick:preventDefault
+               href="#"
+               class="btn btn-outline-secondary active"
+               data-toggle="tooltip"
+               title="List view">
+                <i class="fa fa-bars"></i>
+            </a>
+                                <a @onclick="MudarVisualizacao"
+                                   @onclick:preventDefault
+                                   href="#"
+                                   class="btn btn-outline-secondary"
+                                   data-toggle="tooltip"
+                                   title="Grid view">
+                                    <i class="fa fa-th"></i>
+                                </a>}
+                            <a @onclick="MudarVisualizacao"
+                               @onclick:preventDefault
+                               href="#"
+                               class="btn btn-outline-secondary"
+                               data-toggle="tooltip"
+                               title="List view">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <a @onclick="MudarVisualizacao"
+                               @onclick:preventDefault
+                               href="#"
+                               class="btn btn-outline-secondary active"
+                               data-toggle="tooltip"
+                               title="Grid view">
+                                <i class="fa fa-th"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </header>
+
+                @if (GridView)
+                {
+<div class="row">
+
+    @foreach (var produto in this.Produtos)
+    {
+<div class="col-md-4">
+    <figure class="card card-product-grid">
+        <div class="img-wrap">
+            <img src="@produto.FonteImagem" />
+            <span class="topbar">
+                <a @onclick="() => AdicionarListaDesejos(produto.Id)"
+                   @onclick:preventDefault
+                   href="#"
+                   class="float-right">
+                    <i class="fa fa-heart"></i>
+                </a>
+            </span>
+            <a class="btn-overlay" href="/produtos/@produto.Id/@produto.Nome">
+                <i class="fa fa-search-plus"></i>
+                Olhada rápida
+            </a>
+        </div>
+        <figcaption class="info-wrap">
+            <div class="fix-height">
+                <a href="/produtos/@produto.Id/@produto.Nome" class="title">
+                    @produto.Nome
+                </a>
+                <div class="price-wrap mt-2">
+                    <span class="price">R$@produto.Preco</span>
+                </div>
+            </div>
+            <a @onclick="() => AdicionarCarrinho(produto.Id)"
+               @onclick:preventDefault
+               href="#"
+               class="btn btn-block btn-primary">
+                Adicionar ao Carrinho
+            </a>
+        </figcaption>
+    </figure>
+</div>}
+
+</div> }
+else
+{
+foreach (var produto in this.Produtos)
+{
+<article class="card card-product-list">
+    <div class="row no-gutters">
+        <aside class="col-md-3">
+            <a href="/produtos/@produto.Id/@produto.Nome" class="img-wrap">
+                <img src="@produto.FonteImagem" />
+            </a>
+        </aside>
+        <div class="col-md-6">
+            <div class="info-main">
+                <a href="/produtos/@produto.Id/@produto.Nome" class="h5 title">
+                    @produto.Nome
+                </a>
+
+                <p> @produto.Descricao </p>
+            </div>
+        </div>
+        <aside class="col-sm-3">
+            <div class="info-aside">
+                <div class="price-wrap">
+                    <span class="price h5"> R$@produto.Preco </span>
+                </div>
+                <p class="text-success">Envio Grátis</p>
+
+                <br />
+
+                <p>
+                    <a href="/produtos/@produto.Id/@produto.Nome"
+                       class="btn btn-primary btn-block">
+                        Detalhes
+                    </a>
+                    <a @onclick="() => AdicionarListaDesejos(produto.Id)"
+                       @onclick:preventDefault
+                       href="#"
+                       class="btn btn-light btn-block">
+                        <i class="fa fa-heart"></i>
+                        <span class="text">
+                            Adicionar à lista de desejos
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </aside>
+    </div>
+</article>}
+}
+
+                <Paginacao Pagina="@searchResponse.Pagina"
+                            TotalPaginas="@searchResponse.TotalPaginas"
+                            Radius="2"
+                            SelecionarPagina="PaginaSelecionada" />
+
+            </main>
+
+        </div>
+
+    </div>
+</section>}

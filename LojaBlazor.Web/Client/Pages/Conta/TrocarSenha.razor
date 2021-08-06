@@ -1,0 +1,52 @@
+﻿@page "/conta/senha"
+@attribute [Authorize]
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <div class="row">
+
+            <BarraLateral />
+
+            <main class="col-md-9">
+
+                <article class="card mb-3">
+                    <div class="card-body">
+
+                        <h4 class="card-title mb-4">Trocar Senha</h4>
+                        <EditForm Model="Model" OnValidSubmit="GravarAsync">
+
+                            <ListaErros MostrarErros="MostrarErros" Erros="Erros" />
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Senha Atual:</label>
+                                <div class="col-sm-6">
+                                    <InputText @bind-Value="Model.Senha" class="form-control" type="password" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Nova Senha:</label>
+                                <div class="col-sm-6">
+                                    <InputText @bind-Value="Model.SenhaNova" class="form-control" type="password" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Confirmar Nova Senha:</label>
+                                <div class="col-sm-6">
+                                    <InputText @bind-Value="Model.ConfirmarSenhaNova" class="form-control" type="password" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary"> Salvar Mudanças </button>
+                        </EditForm>
+
+                    </div>
+                </article>
+
+            </main>
+        </div>
+
+    </div>
+</section>

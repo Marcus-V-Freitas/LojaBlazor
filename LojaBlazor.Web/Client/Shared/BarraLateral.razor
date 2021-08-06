@@ -1,0 +1,100 @@
+﻿<aside class="col-md-3">
+    <ul class="list-group">
+        @if (NavigationManager.Uri.Contains("overview"))
+        {
+        <li>
+            <a class="list-group-item active" href="/conta/overview"> Visão geral da conta  </a>
+        </li>
+        <li>
+            <a class="list-group-item" href="/pedidos/meu"> Meus Pedidos </a>
+        </li>
+        <li>
+            <a class="list-group-item" href="/addresses"> Meus endereços </a>
+        </li>
+        <li>
+            <a class="list-group-item" href="/conta/configuracao"> Configurações </a>
+        </li>
+        <li>
+            <a class="list-group-item" href="/conta/senha"> Mudar Senha </a>
+        </li>
+ }
+  else if (NavigationManager.Uri.Contains("pedidos"))
+  {
+       <li>
+         <a class="list-group-item" href="/conta/overview"> Visão geral da conta  </a>
+       </li>
+       <li>
+         <a class="list-group-item active" href="/pedidos/meu"> Meus Pedidos </a>
+       </li>
+       <li>
+          <a class="list-group-item" href="/enderecos"> Meus endereços </a>
+       </li>
+       <li>
+         <a class="list-group-item" href="/conta/configuracao"> Configurações </a>
+       </li>
+        <li>
+             <a class="list-group-item" href="/conta/senha"> Mudar Senha </a>
+         </li>
+             }
+                                                                                                                                    
+ else if (NavigationManager.Uri.Contains("enderecos")){
+            <li>
+               <a class="list-group-item" href="/conta/overview"> Visão geral da conta  </a>
+              </li>
+            <li>
+                <a class="list-group-item" href="/pedidos/meu"> Meus Pedidos </a>
+            </li>
+            <li>
+                <a class="list-group-item active" href="/enderecos"> Meus endereços </a>
+             </li>
+             <li>
+                <a class="list-group-item" href="/conta/configuracao"> Configurações </a>
+              </li>
+              <li>
+                  <a class="list-group-item" href="/conta/senha"> Mudar Senha </a>
+              </li>
+ }
+          else if (NavigationManager.Uri.Contains("configuracao"))
+                 {
+             <li>
+                 <a class="list-group-item" href="/conta/overview"> Visão geral da conta  </a>
+             </li>
+             <li>
+                 <a class="list-group-item" href="/pedidos/meu"> Meus Pedidos </a>
+             </li>
+              <li>
+                  <a class="list-group-item" href="/enderecos"> Meus endereços </a> 
+                  </li>
+                  <li>
+                  <a class="list-group-item active" href="/conta/configuracao"> Configurações </a>
+               </li>
+               <li>
+                 <a class="list-group-item" href="/conta/senha"> Mudar Senha</a>
+                </li> }
+                           else if (NavigationManager.Uri.Contains("senha"))
+                           {
+           <li>
+               <a class="list-group-item" href="/conta/overview"> Visão geral da conta  </a>
+               </li>
+           <li>
+               <a class="list-group-item" href="/pedidos/meu"> Meus Pedidos </a>
+
+           </li>
+           <li>
+               <a class="list-group-item" href="/enderecos"> Meus endereços </a>
+           </li>
+           <li>
+               <a class="list-group-item" href="/conta/configuracao"> Configurações </a>
+           </li> 
+           <li>
+                <a class="list-group-item active" href="/conta/senha"> Mudar Senha </a>
+            </li> 
+           }
+ </ul>
+
+    <br />
+
+    <a class="btn btn-light btn-block" href="/" @onclick="Logout">
+        <i class="fas fa-sign-out-alt"></i> <span class="text">Logout</span>
+    </a>
+</aside>

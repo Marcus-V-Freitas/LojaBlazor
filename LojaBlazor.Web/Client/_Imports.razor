@@ -1,0 +1,52 @@
+﻿@using System.Net
+@using System.Net.Http
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+
+@using Blazored.LocalStorage
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.JSInterop
+
+@using LojaBlazor.Common
+@using LojaBlazor.Models
+@using LojaBlazor.Models.Enderecos
+@using LojaBlazor.Models.Categorias
+@using LojaBlazor.Models.Identity
+@using LojaBlazor.Models.Pedidos
+@using LojaBlazor.Models.Produtos
+@using LojaBlazor.Models.CarrinhoCompras
+@using LojaBlazor.Models.ListaDesejos
+@using LojaBlazor.Web.Client.Infrastructure
+@using LojaBlazor.Web.Client.Infrastructure.Extensions
+@using LojaBlazor.Web.Client.Infrastructure.Services
+@using LojaBlazor.Web.Client.Infrastructure.Services.Authentication
+@using LojaBlazor.Web.Client.Infrastructure.Services.Enderecos
+@using LojaBlazor.Web.Client.Infrastructure.Services.Categorias
+@using LojaBlazor.Web.Client.Infrastructure.Services.Pedidos
+@using LojaBlazor.Web.Client.Infrastructure.Services.Produtos
+@using LojaBlazor.Web.Client.Infrastructure.Services.CarrinhoCompras
+@using LojaBlazor.Web.Client.Infrastructure.Services.ListaDesejos
+@using LojaBlazor.Web.Client.Pages.Conta
+@using LojaBlazor.Web.Client.Shared
+@using LojaBlazor.Web.Client.Shared.Common
+@using LojaBlazor.Web.Client.Shared.Navegacao
+@using LojaBlazor.Web.Client.Shared.Produtos
+
+@inject ApiAuthenticationStateProvider AuthState
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IToastService ToastService
+@inject IAuthService AuthService
+@inject IEnderecosService EnderecosService
+@inject ICategoriasService CategoriasService
+@inject IPedidosService PedidosService
+@inject IProdutosService ProdutosService
+@inject ICarrinhoComprasService CarrinhoComprasService
+@inject IListaDesejosService ListaDesejosService

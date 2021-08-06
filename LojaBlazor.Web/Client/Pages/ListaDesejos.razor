@@ -1,0 +1,53 @@
+﻿@page "/lista-desejos"
+@attribute [Authorize]
+
+@if (Produtos == null)
+{
+<Carregando />
+ }
+else
+{
+<section class="section-content padding-y bg">
+    <div class="container">
+        <article class="card">
+            <header class="card-header"> Minha lista de desejos </header>
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var produto in Produtos)
+                    {
+    <div class="col-md-3">
+        <figure class="card card-product-grid  mb-3">
+            <div class="img-wrap">
+                <a href="produtos/@produto.Id/@produto.Nome">
+                    <img src="@produto.FonteImagem" />
+                </a>
+            </div>
+            <figcaption class="info-wrap">
+                <a href="produtos/@produto.Id/@produto.Nome" class="title text-truncate">
+                    @produto.Nome
+                </a>
+
+                <p class="price mb-2">R$@produto.Preco</p>
+
+                <a @onclick="() => AdicionarAsync(produto.Id)"
+                   @onclick:preventDefault
+                   href="#"
+                   class="btn btn-primary btn-sm">
+                    Adicionar ao Carrinho
+                </a>
+                <a @onclick="() => RemoverAsync(produto.Id)"
+                   @onclick:preventDefault
+                   href="#"
+                   class="btn btn-danger btn-sm"
+                   data-toggle="tooltip"
+                   title="Remover da lista de desejos">
+                    <i class="fa fa-times"></i>
+                </a>
+            </figcaption>
+        </figure>
+    </div>}
+                </div>
+            </div>
+        </article>
+    </div>
+</section>}

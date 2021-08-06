@@ -1,0 +1,14 @@
+﻿@attribute [Authorize]
+
+@if (ProdutosCarrinhoCount == null)
+{
+<Carregando />
+ }
+else
+{
+<a href="/carrinho" class="widget-header mr-3">
+    <div class="icon">
+        <i class="icon-sm rounded-circle border fa fa-shopping-cart"></i>
+        <span class="notify">@ProdutosCarrinhoCount</span>
+    </div>
+</a>}

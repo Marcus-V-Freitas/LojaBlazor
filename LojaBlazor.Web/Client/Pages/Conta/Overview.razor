@@ -1,0 +1,94 @@
+﻿@page "/conta/overview"
+@attribute [Authorize]
+
+@if (Pedidos == null)
+{
+<Carregando />
+ }
+else
+{
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <div class="row">
+
+            <BarraLateral />
+
+            <main class="col-md-9">
+
+                <article class="card mb-3">
+                    <div class="card-body">
+
+                        <figure class="icontext">
+                            <div class="text">
+                                <strong> @PrimeiroNome @Sobrenome </strong>
+                                <br />
+                                @Email
+                                <br />
+                                <a href="/conta/configuracao">Editar</a>
+                            </div>
+                        </figure>
+                        <hr>
+                        <p>
+                            <i class="fa fa-map-marker text-muted"></i> &nbsp; Meu endereço:
+                            <br />
+                            Tashkent city, Street name, Building 123, House 321 &nbsp;
+                            <a href="/addresses" class="btn-link"> Editar </a>
+                        </p>
+
+                        <article class="card-group">
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h5 class="card-title">@Pedidos.Count()</h5>
+                                    <span>Pedidos</span>
+                                </div>
+                            </figure>
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h5 class="card-title">5</h5>
+                                    <span>Listas de desejo</span>
+                                </div>
+                            </figure>
+                        </article>
+
+                    </div>
+                </article>
+
+                <article class="card  mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Recent orders </h5>
+
+                        <div class="row">
+
+                            @foreach (var pedido in Pedidos)
+                            {
+            <div class="col-md-6">
+                <figure class="itemside  mb-3">
+
+                    <div class="aside">
+                        <a href="/pedido/detalhes/@pedido.Id">
+                            <img src="@pedido.FonteImagemProduto" class="border img-sm">
+                        </a>
+                    </div>
+                    <figcaption class="info">
+                        <a href="/pedido/detalhes/@pedido.Id">
+                            <time class="text-muted"><i class="fa fa-calendar-alt"></i> @pedido.CriadoEm </time>
+                            <p class="black"> @pedido.NomeProduto </p>
+                            <span class="text-success">Enviado</span>
+                        </a>
+                    </figcaption>
+
+                </figure>
+            </div>}
+
+                        </div>
+
+                        <a href="/pedidos/meu" class="btn btn-outline-primary"> Veja todos os pedidos  </a>
+                    </div>
+                </article>
+
+            </main>
+        </div>
+
+    </div>
+</section>}
